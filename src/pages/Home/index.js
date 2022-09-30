@@ -3,7 +3,11 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 
 import * as Animatable from "react-native-animatable";
 
+import { useNavigation } from "@react-navigation/native";
+
 const Home = () => {
+  const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
       <View style={styles.containerLogo}>
@@ -23,7 +27,10 @@ const Home = () => {
           Organize suas reuniões de qualquer lugar!
         </Text>
         <Text style={styles.text}>Faça o login para começar</Text>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.navigate("Signin")}
+        >
           <Text style={styles.buttonText}>Acessar</Text>
         </TouchableOpacity>
       </Animatable.View>
