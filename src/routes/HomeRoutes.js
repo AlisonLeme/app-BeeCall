@@ -2,10 +2,11 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import Home from "../pages/Home";
 import Signin from "../pages/Signin";
+import LoggedRoutes from "./LoggedRoutes";
 
 const Stack = createNativeStackNavigator();
 
-const Routes = () => {
+const HomeRoutes = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -18,8 +19,13 @@ const Routes = () => {
         component={Signin}
         options={{ headerShown: false }}
       />
+      <Stack.Screen
+        name="LoggedRoutes"
+        component={LoggedRoutes}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   );
 };
 
-export default Routes;
+export default HomeRoutes;

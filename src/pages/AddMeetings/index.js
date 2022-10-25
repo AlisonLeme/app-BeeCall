@@ -13,19 +13,7 @@ import * as Animatable from "react-native-animatable";
 
 import axios from "axios";
 
-const Signin = ({ navigation }) => {
-  const handleLogin = (credentials) => {
-    const uri = "http://localhost:8080";
-    axios
-      .post(`${uri}/api/auth/signin`, credentials)
-      .then((res) => {
-        const result = res.data;
-        navigation.navigate("LoggedRoutes", result);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+const AddMeetings = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
@@ -34,7 +22,7 @@ const Signin = ({ navigation }) => {
         delay={500}
         style={styles.containerHeader}
       >
-        <Text style={styles.message}>Bem vindo(a)</Text>
+        <Text style={styles.message}>Cadastrar chamadas</Text>
       </Animatable.View>
       <Formik
         initialValues={{ email: "", password: "" }}
@@ -63,13 +51,7 @@ const Signin = ({ navigation }) => {
             />
 
             <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-              <Text style={styles.buttonText}>Acessar</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.buttonRegister}>
-              <Text style={styles.buttonTextRegister}>
-                Não possui uma conta? Cadastre-se
-              </Text>
+              <Text style={styles.buttonText}>Cadastrar</Text>
             </TouchableOpacity>
           </Animatable.View>
         )}
@@ -134,4 +116,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Signin;
+export default AddMeetings;
