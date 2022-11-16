@@ -2,16 +2,16 @@
 
 Repositório para o App da disciplina de UPX 6
 
-  INTEGRANTES:
+  **Integrantes:**
 * Alanys Ribeiro Santos - 200775
 * Alison Leme dos Santos - 171422
 * André Luiz Dos Santos Leite - 200036
 * Rafael Azzolini - 200120
 * Raphael Augusto Santos - 200361
 
-Link do repositório com o back end do App: [https://github.com/AlisonLeme/api-app]
+Link do repositório com o back end do App: <https://github.com/AlisonLeme/api-app>
 
-Para Iniciar o App:
+  **Para Iniciar o App:**
 
 1. Clone os dois repositórios.
 
