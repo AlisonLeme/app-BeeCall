@@ -9,7 +9,7 @@ import EditMeetings from "../pages/EditMeetings";
 
 const Tab = createBottomTabNavigator();
 
-const LoggedRoutes = () => {
+const LoggedRoutes = ({ route }) => {
   return (
     <Tab.Navigator
       screenOptions={{
@@ -24,6 +24,7 @@ const LoggedRoutes = () => {
       <Tab.Screen
         name="Welcome"
         component={Welcome}
+        initialParams={route}
         options={{
           headerShown: false,
           tabBarLabelStyle: {
