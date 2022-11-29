@@ -12,6 +12,8 @@ Repositório para o App da disciplina de UPX 6
 Link do repositório com o back end do App: <https://github.com/AlisonLeme/api-app>
 
   **Para Iniciar o App:**
+  
+  Versão recomendada do node **16.14.2**
 
 1. Clone os dois repositórios.
 
