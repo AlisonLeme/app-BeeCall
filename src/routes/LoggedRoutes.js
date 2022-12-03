@@ -38,6 +38,7 @@ const LoggedRoutes = ({ route }) => {
       <Tab.Screen
         name="AddMeetings"
         component={AddMeetings}
+        initialParams={route}
         options={{
           headerShown: false,
           tabBarLabelStyle: {

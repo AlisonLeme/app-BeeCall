@@ -15,7 +15,7 @@ import axios from "axios";
 
 const Signin = ({ navigation }) => {
   const handleLogin = (credentials) => {
-    const uri = "http://localhost:8080";
+    const uri = "https://api-kox9zsndz-alisonleme.vercel.app";
     axios
       .post(`${uri}/api/auth/signin`, credentials)
       .then((res) => {

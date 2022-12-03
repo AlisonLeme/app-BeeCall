@@ -3,27 +3,47 @@ import {
   View,
   Text,
   StyleSheet,
-  Image,
-  TouchableOpacity,
   FlatList,
+  Linking,
+  TouchableOpacity
 } from "react-native";
+
 import axios from "axios";
+import { Entypo } from "@expo/vector-icons";
 
 import * as Animatable from "react-native-animatable";
 
 const Welcome = ({ route, navigation }) => {
   const [calls, setCalls] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
 
   const ComponentCalls = ({ item }) => {
+    console.log(item)
     return (
-      <View style={styles.contextAllAlunos}>
+      <View style={styles.contextAllCalls}>
         <Text style={styles.text}> Criador: {item.host} </Text>
+        <Text style={styles.text}> Assunto: {item.title} </Text>
+        <Text style={styles.text}> Descrição: {item.description} </Text>
+        <Text style={styles.text}> Data: {item.date} </Text>
+        <Text style={styles.text}> Hora: {item.time} </Text>
+        <Text style={styles.text}> Plataforma: {item.plataform} </Text>
+        <Text style={styles.text}> Link reunião: {item.link}</Text>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => Linking.openURL(item.link)}
+        >
+          <Text style={styles.buttonText}>Ir para reunião</Text>
+        </TouchableOpacity>
       </View>
     );
   };
-
+  
   useEffect(() => {
-    const uri = "http://localhost:8080";
+    getCalls()
+  }, []);
+
+  const getCalls = () => {
+    const uri = "https://api-kox9zsndz-alisonleme.vercel.app";
     axios
       .get(`${uri}/api/calls/`)
       .then((res) => {
@@ -45,22 +65,30 @@ const Welcome = ({ route, navigation }) => {
           }
         });
 
+        console.log('minhas', myCalls)
         setCalls(myCalls);
       })
       .catch((error) => {
         console.log(error);
       });
-  }, []);
-
-  console.log(calls);
+  }
 
   return (
     <View style={styles.container}>
-      <Text>Reuniões</Text>
+      <View style={styles.containerUser}>
+        <Entypo name="user" size={40} />
+        <Text style={styles.textUser}>Seja bem vindo(a) {route.params.params.name}</Text>
+      </View>
       <FlatList
         showsVerticalScrollIndicator={false}
         data={calls}
         renderItem={({ item }) => <ComponentCalls item={item} />}
+        refreshing={refreshing}
+        onRefresh={() => {
+          setRefreshing(true)
+          getCalls()
+          setRefreshing(false)
+        }}
       />
     </View>
   );
@@ -70,6 +98,37 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#FFD543",
+  },
+  containerUser: {
+    flexDirection: 'row',
+    padding: 20,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  textUser: {
+    fontSize: 20
+  },
+  contextAllCalls: {
+    backgroundColor: "#faf4e0",
+    padding: 10,
+    marginBottom: 10,
+    borderTopEndRadius: 20,
+    borderTopStartRadius: 20
+  },
+  button: {
+    backgroundColor: "#0D99FF",
+    width: "60%",
+    borderRadius: 10,
+    paddingVertical: 6,
+    marginTop: 14,
+    alignSelf: 'center',
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  buttonText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "bold",
   },
 });
 
