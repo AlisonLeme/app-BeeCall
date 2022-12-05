@@ -18,7 +18,6 @@ const Welcome = ({ route, navigation }) => {
   const [refreshing, setRefreshing] = useState(false);
 
   const ComponentCalls = ({ item }) => {
-    console.log(item)
     return (
       <View style={styles.contextAllCalls}>
         <Text style={styles.text}> Criador: {item.host} </Text>
@@ -28,6 +27,14 @@ const Welcome = ({ route, navigation }) => {
         <Text style={styles.text}> Hora: {item.time} </Text>
         <Text style={styles.text}> Plataforma: {item.plataform} </Text>
         <Text style={styles.text}> Link reunião: {item.link}</Text>
+        <Text style={{ fontWeight: 'bold', marginTop: 2 }}> Participantes:</Text>
+        <FlatList
+        showsVerticalScrollIndicator={false}
+        data={item.participants}
+        renderItem={({ item, index }) => (
+          <Text style={styles.text}> - {item}</Text>
+        )}
+      />
         <TouchableOpacity
           style={styles.button}
           onPress={() => Linking.openURL(item.link)}
@@ -49,7 +56,7 @@ const Welcome = ({ route, navigation }) => {
       .then((res) => {
         const result = res.data;
 
-        const myCalls = result.map((r) => {
+        const myCalls = result.filter((r) => {
           let aux = false;
           if (route.params.params.email === r.host) {
             aux = true;
@@ -65,7 +72,6 @@ const Welcome = ({ route, navigation }) => {
           }
         });
 
-        console.log('minhas', myCalls)
         setCalls(myCalls);
       })
       .catch((error) => {

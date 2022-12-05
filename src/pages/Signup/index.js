@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Formik } from "formik";
 
 import {
@@ -13,19 +13,7 @@ import * as Animatable from "react-native-animatable";
 
 import axios from "axios";
 
-const Signin = ({ navigation }) => {
-  const handleLogin = (credentials) => {
-    const uri = "https://api-kox9zsndz-alisonleme.vercel.app";
-    axios
-      .post(`${uri}/api/auth/signin`, credentials)
-      .then((res) => {
-        const result = res.data;
-        navigation.navigate("LoggedRoutes", result);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+const Signup = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
@@ -34,22 +22,39 @@ const Signin = ({ navigation }) => {
         delay={500}
         style={styles.containerHeader}
       >
-        <Text style={styles.message}>Bem vindo(a)</Text>
+        <Text style={styles.message}>Cadastrar usuário</Text>
       </Animatable.View>
       <Formik
-        initialValues={{ email: "", password: "" }}
-        onSubmit={(values) => {
-          handleLogin(values);
+        initialValues={{ name: "", email: "", password: ""}}
+        onSubmit={(values, { resetForm }) => {
+
+          const uri = "https://api-kox9zsndz-alisonleme.vercel.app";
+
+          axios.post(`${uri}/api/users`, values)
+          .then((res) => {
+            navigation.navigate("Signin")
+          })
+          .catch(console.log)
+          resetForm();
         }}
       >
         {({ handleChange, handleSubmit, values }) => (
           <Animatable.View animation="fadeInUp" style={styles.containerForm}>
+            <Text style={styles.name}>Nome</Text>
+            <TextInput
+              id="name"
+              onChangeText={handleChange("name")}
+              value={values.name}
+              placeholder="Digite o seu nome"
+              style={styles.input}
+            />
+
             <Text style={styles.title}>E-mail</Text>
             <TextInput
               id="email"
               onChangeText={handleChange("email")}
               value={values.email}
-              placeholder="Digite um e-mail..."
+              placeholder="Digite o seu e-mail"
               style={styles.input}
             />
 
@@ -58,18 +63,13 @@ const Signin = ({ navigation }) => {
               id="password"
               onChangeText={handleChange("password")}
               value={values.password}
-              placeholder="Sua senha"
+              keyboardType="visible-password"
+              placeholder="Digite a sua senha"
               style={styles.input}
             />
 
             <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-              <Text style={styles.buttonText}>Acessar</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.buttonRegister} onPress={() => navigation.navigate("Signup")}>
-              <Text style={styles.buttonTextRegister}>
-                Não possui uma conta? Cadastre-se
-              </Text>
+              <Text style={styles.buttonText}>Cadastrar</Text>
             </TouchableOpacity>
           </Animatable.View>
         )}
@@ -106,10 +106,18 @@ const styles = StyleSheet.create({
     marginTop: 28,
   },
   input: {
+    width: '100%',
     borderBottomWidth: 1,
     height: 40,
     marginBottom: 12,
     fontSize: 16,
+  },
+  containerMoreParticipants: {
+    marginTop: 28,
+    marginBottom: 20,
+    flexDirection: 'row',
+    justifyContent: "space-between",
+    alignItems: 'center'
   },
   button: {
     backgroundColor: "#0D99FF",
@@ -134,4 +142,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Signin;
+export default Signup;
